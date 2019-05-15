@@ -23,6 +23,12 @@ class TimesTableSeeder extends Seeder
             [
                 'waktu' => "Full Day",
             ],
+            [
+                'waktu' => "2 hari",
+            ],
+            [
+                'waktu' => "3 hari",
+            ],
         ]);
     }
 }

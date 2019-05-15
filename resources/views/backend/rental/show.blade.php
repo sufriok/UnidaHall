@@ -51,7 +51,7 @@
                     </div>
                     <div class="form-group">
                         <label>Status</label>
-                        <input class="form-control" value="{{ $rental->status }}" disabled>
+                        <input class="form-control" value="{{ $rental->status->name }}" disabled>
                     </div>
                     <div class="form-group">
                         <label>Pemberi Izin</label>

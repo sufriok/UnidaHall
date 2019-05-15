@@ -168,7 +168,7 @@
                             <label><p><strong>Acara : </strong>{{$rental->acara}}</p></label>
                         </div>
                         <div class="col-md-6">
-                            <label><p><strong>Status : </strong>{{$rental->status}}</p></label><br>
+                            <label><p><strong>Status : </strong>{{$rental->status->name}}</p></label><br>
                             <label><p><strong>Nama : </strong>{{$rental->peminjam}}</p></label><br>
                             <label><p><strong>Prodi : </strong>{{$rental->prodi->name}}</p></label><br>
                             <label><p><strong>No HP : </strong>{{$rental->no_hp}}</p></label><br>

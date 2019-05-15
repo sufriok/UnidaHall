@@ -9,12 +9,41 @@ use App\Staff;
 use App\Message;
 use App\Prodi;
 use App\Time;
+use DateTime;
+use DatePeriod;
+use DateInterval;
 use Calendar;
 
 class FrontendController extends Controller
 {
     public function index()
     {
+        //$tgl1 = "2019-01-28";//pendefinisian tanggal
+        //$tgl2 = date('Y-m-d', strtotime('+6 days', strtotime($tgl1)));//operasi penjumlahan tanggal sebanyak 6 hari
+
+        // function getDatesFromRange($start, $end) {
+        //     $interval = new DateInterval('P1D'); // PT5M 5 min 
+         
+        //     $realEnd = new DateTime($end);
+        //     $realEnd->add($interval);
+         
+        //     $period = new DatePeriod(
+        //          new DateTime($start),
+        //          $interval,
+        //          $realEnd
+        //     );
+         
+        //     foreach($period as $date) { 
+        //         $array[] = $date->format('Y-m-d'); 
+        //     }
+         
+        //     return $array;
+        // }
+         
+        // // Call the function
+        // $dates = getDatesFromRange($tgl1, $tgl2); 
+        
+        // dd($dates);
         return view('frontend.index');
     }
 
@@ -100,7 +129,7 @@ class FrontendController extends Controller
             $warna = "#F9A602";
         }elseif ($request->time_id == '2') {
             $warna = "#F9812A";
-        }elseif ($request->time_id == '3') {
+        }else{
             $warna = "#FF4500";
         }
         $aula = $request->room_id;
@@ -108,32 +137,126 @@ class FrontendController extends Controller
 
         if ($rentals == "[]") {
 
-            $destination = "surat";
-            $foto = $request->file('surat');
-            $extension = $foto->getClientOriginalExtension(); 
-            // RENAME THE UPLOAD WITH RANDOM NUMBER 
-            $suratName = rand(11111, 33333) . '.' . $extension; 
-            // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY 
-            $foto->move($destination, $suratName);
-            
-            $rental = New Rental;
-            $rental->staff_id = $request->staff_id;
-            $rental->room_id = $request->room_id;
-            $rental->peminjam = $request->peminjam;
-            $rental->prodi_id = $request->prodi_id;
-            $rental->no_hp = $request->no_hp;
-            $rental->alamat = $request->alamat;
-            $rental->acara = $request->acara;
-            $rental->tgl_awal = $request->tgl_awal;
-            $rental->tgl_akhir = $request->tgl_awal;
-            $rental->time_id = $request->time_id;
-            $rental->surat = $suratName;
-            $rental->color = $warna;
-            $rental->status = "belum terkonfirmasi";
-            $rental->pember_izin = "belum";
-            $rental->save();
+            if ($request->time_id == '4') {
 
-            return redirect()->route('frontend.schedule')->with('success', 'Input success, dalam waktu 24jam surat anda akan kami cek');
+                $destination = "surat";
+                $foto = $request->file('surat');
+                $extension = $foto->getClientOriginalExtension(); 
+                // RENAME THE UPLOAD WITH RANDOM NUMBER 
+                $suratName = rand(11111, 33333) . '.' . $extension; 
+                // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY 
+                $foto->move($destination, $suratName);
+
+                $tgl1 = $request->tgl_awal;//pendefinisian tanggal
+                $tgl2 = date('Y-m-d', strtotime('+1 days', strtotime($tgl1)));
+
+                // Declare an empty array 
+                $array = array(); 
+                
+                // Use strtotime function 
+                $Variable1 = strtotime($tgl1); 
+                $Variable2 = strtotime($tgl2); 
+                
+                // Use for loop to store dates into array 
+                // 86400 sec = 24 hrs = 60*60*24 = 1 day 
+                for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) { 
+                                                    
+                    $Store = date('Y-m-d', $currentDate); 
+                    
+                    $rental = New Rental;
+                    $rental->staff_id = $request->staff_id;
+                    $rental->room_id = $request->room_id;
+                    $rental->peminjam = $request->peminjam;
+                    $rental->prodi_id = $request->prodi_id;
+                    $rental->no_hp = $request->no_hp;
+                    $rental->alamat = $request->alamat;
+                    $rental->acara = $request->acara;
+                    $rental->tgl_awal = $Store;
+                    $rental->tgl_akhir = $Store;
+                    $rental->time_id = "3";
+                    $rental->surat = $suratName;
+                    $rental->color = $warna;
+                    $rental->status_id = "2";
+                    $rental->pember_izin = "belum";
+                    $rental->save();
+                }
+
+                return redirect()->route('frontend.schedule')->with('success', 'Input success, dalam waktu 24jam surat anda akan kami cek');
+            }elseif($request->time_id == '5') {
+
+                $destination = "surat";
+                $foto = $request->file('surat');
+                $extension = $foto->getClientOriginalExtension(); 
+                // RENAME THE UPLOAD WITH RANDOM NUMBER 
+                $suratName = rand(11111, 33333) . '.' . $extension; 
+                // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY 
+                $foto->move($destination, $suratName);
+
+                $tgl1 = $request->tgl_awal;//pendefinisian tanggal
+                $tgl2 = date('Y-m-d', strtotime('+2 days', strtotime($tgl1)));
+
+                // Declare an empty array 
+                $array = array(); 
+                
+                // Use strtotime function 
+                $Variable1 = strtotime($tgl1); 
+                $Variable2 = strtotime($tgl2); 
+                
+                // Use for loop to store dates into array 
+                // 86400 sec = 24 hrs = 60*60*24 = 1 day 
+                for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) { 
+                                                    
+                    $Store = date('Y-m-d', $currentDate); 
+                    
+                    $rental = New Rental;
+                    $rental->staff_id = $request->staff_id;
+                    $rental->room_id = $request->room_id;
+                    $rental->peminjam = $request->peminjam;
+                    $rental->prodi_id = $request->prodi_id;
+                    $rental->no_hp = $request->no_hp;
+                    $rental->alamat = $request->alamat;
+                    $rental->acara = $request->acara;
+                    $rental->tgl_awal = $Store;
+                    $rental->tgl_akhir = $Store;
+                    $rental->time_id = "3";
+                    $rental->surat = $suratName;
+                    $rental->color = $warna;
+                    $rental->status_id = "2";
+                    $rental->pember_izin = "belum";
+                    $rental->save();
+                }
+
+                return redirect()->route('frontend.schedule')->with('success', 'Input success, dalam waktu 24jam surat anda akan kami cek');
+            }else {
+
+                $destination = "surat";
+                $foto = $request->file('surat');
+                $extension = $foto->getClientOriginalExtension(); 
+                // RENAME THE UPLOAD WITH RANDOM NUMBER 
+                $suratName = rand(11111, 33333) . '.' . $extension; 
+                // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY 
+                $foto->move($destination, $suratName);
+                
+                $rental = New Rental;
+                $rental->staff_id = $request->staff_id;
+                $rental->room_id = $request->room_id;
+                $rental->peminjam = $request->peminjam;
+                $rental->prodi_id = $request->prodi_id;
+                $rental->no_hp = $request->no_hp;
+                $rental->alamat = $request->alamat;
+                $rental->acara = $request->acara;
+                $rental->tgl_awal = $request->tgl_awal;
+                $rental->tgl_akhir = $request->tgl_awal;
+                $rental->time_id = $request->time_id;
+                $rental->surat = $suratName;
+                $rental->color = $warna;
+                $rental->status_id = "2";
+                $rental->pember_izin = "belum";
+                $rental->save();
+
+                return redirect()->route('frontend.schedule')->with('success', 'Input success, dalam waktu 24jam surat anda akan kami cek');
+            }
+            
 
         }else {
 
@@ -186,7 +309,7 @@ class FrontendController extends Controller
                         $rental->time_id = $request->time_id;
                         $rental->surat = $suratName;
                         $rental->color = $warna;
-                        $rental->status = "belum terkonfirmasi";
+                        $rental->status_id = "2";
                         $rental->pember_izin = "belum";
                         $rental->save();
     
@@ -195,32 +318,151 @@ class FrontendController extends Controller
                 }
                 
             }else{
-                $destination = "surat";
-                $foto = $request->file('surat');
-                $extension = $foto->getClientOriginalExtension(); 
-                // RENAME THE UPLOAD WITH RANDOM NUMBER 
-                $suratName = rand(11111, 33333) . '.' . $extension; 
-                // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY 
-                $foto->move($destination, $suratName);
-                
-                $rental = New Rental;
-                $rental->staff_id = $request->staff_id;
-                $rental->room_id = $request->room_id;
-                $rental->peminjam = $request->peminjam;
-                $rental->prodi_id = $request->prodi_id;
-                $rental->no_hp = $request->no_hp;
-                $rental->alamat = $request->alamat;
-                $rental->acara = $request->acara;
-                $rental->tgl_awal = $request->tgl_awal;
-                $rental->tgl_akhir = $request->tgl_awal;
-                $rental->time_id = $request->time_id;
-                $rental->surat = $suratName;
-                $rental->color = $warna;
-                $rental->status = "belum terkonfirmasi";
-                $rental->pember_izin = "belum";
-                $rental->save();
 
-                return redirect()->route('frontend.schedule')->with('success', 'Input success, dalam waktu 24jam surat anda akan kami cek');
+                if($request->time_id == '4') {
+
+                    $tgl1 = $request->tgl_awal;//pendefinisian tanggal
+                    $tgl2 = date('Y-m-d', strtotime('+1 days', strtotime($tgl1)));
+
+                    // Declare an empty array 
+                    $array = array(); 
+                    
+                    // Use strtotime function 
+                    $Variable1 = strtotime($tgl1); 
+                    $Variable2 = strtotime($tgl2); 
+                    
+                    // Use for loop to store dates into array 
+                    // 86400 sec = 24 hrs = 60*60*24 = 1 day 
+                    for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) { 
+                                                        
+                        $Store = date('Y-m-d', $currentDate); 
+                        $array[] = $Store;
+                    }
+                    if (in_array($array[1],$tgls)) {
+                        return back()->withInput()->with('error', 'Input Invalid, Aula yang anda pilih sudah terpinjam pada waktu tersebut');
+                    }else {
+
+                        $destination = "surat";
+                        $foto = $request->file('surat');
+                        $extension = $foto->getClientOriginalExtension(); 
+                        // RENAME THE UPLOAD WITH RANDOM NUMBER 
+                        $suratName = rand(11111, 33333) . '.' . $extension; 
+                        // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY 
+                        $foto->move($destination, $suratName);
+
+                        // Use for loop to store dates into array 
+                        // 86400 sec = 24 hrs = 60*60*24 = 1 day 
+                        for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) { 
+                                                            
+                            $Store = date('Y-m-d', $currentDate); 
+                            $rental = New Rental;
+                            $rental->staff_id = $request->staff_id;
+                            $rental->room_id = $request->room_id;
+                            $rental->peminjam = $request->peminjam;
+                            $rental->prodi_id = $request->prodi_id;
+                            $rental->no_hp = $request->no_hp;
+                            $rental->alamat = $request->alamat;
+                            $rental->acara = $request->acara;
+                            $rental->tgl_awal = $Store;
+                            $rental->tgl_akhir = $Store;
+                            $rental->time_id = "3";
+                            $rental->surat = $suratName;
+                            $rental->color = $warna;
+                            $rental->status_id = "2";
+                            $rental->pember_izin = "belum";
+                            $rental->save();
+                        }
+        
+                        return redirect()->route('frontend.schedule')->with('success', 'Input success, dalam waktu 24jam surat anda akan kami cek');
+                    }
+                }elseif($request->time_id == '5') {
+
+                    $tgl1 = $request->tgl_awal;//pendefinisian tanggal
+                    $tgl2 = date('Y-m-d', strtotime('+2 days', strtotime($tgl1)));
+
+                    // Declare an empty array 
+                    $array = array(); 
+                    
+                    // Use strtotime function 
+                    $Variable1 = strtotime($tgl1); 
+                    $Variable2 = strtotime($tgl2); 
+                    
+                    // Use for loop to store dates into array 
+                    // 86400 sec = 24 hrs = 60*60*24 = 1 day 
+                    for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) { 
+                                                        
+                        $Store = date('Y-m-d', $currentDate); 
+                        $array[] = $Store;
+                    }
+                    if (in_array($array[1],$tgls)) {
+                        return back()->withInput()->with('error', 'Input Invalid, Aula yang anda pilih sudah terpinjam pada waktu tersebut');
+                    }elseif(in_array($array[2],$tgls)) {
+                        return back()->withInput()->with('error', 'Input Invalid, Aula yang anda pilih sudah terpinjam pada waktu tersebut');
+                    }else{
+
+                        $destination = "surat";
+                        $foto = $request->file('surat');
+                        $extension = $foto->getClientOriginalExtension(); 
+                        // RENAME THE UPLOAD WITH RANDOM NUMBER 
+                        $suratName = rand(11111, 33333) . '.' . $extension; 
+                        // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY 
+                        $foto->move($destination, $suratName);
+
+                        // Use for loop to store dates into array 
+                        // 86400 sec = 24 hrs = 60*60*24 = 1 day 
+                        for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) { 
+                                                            
+                            $Store = date('Y-m-d', $currentDate); 
+                            $rental = New Rental;
+                            $rental->staff_id = $request->staff_id;
+                            $rental->room_id = $request->room_id;
+                            $rental->peminjam = $request->peminjam;
+                            $rental->prodi_id = $request->prodi_id;
+                            $rental->no_hp = $request->no_hp;
+                            $rental->alamat = $request->alamat;
+                            $rental->acara = $request->acara;
+                            $rental->tgl_awal = $Store;
+                            $rental->tgl_akhir = $Store;
+                            $rental->time_id = "3";
+                            $rental->surat = $suratName;
+                            $rental->color = $warna;
+                            $rental->status_id = "2";
+                            $rental->pember_izin = "belum";
+                            $rental->save();
+                        }
+                        
+                        return redirect()->route('frontend.schedule')->with('success', 'Input success, dalam waktu 24jam surat anda akan kami cek');
+                    }
+                }else {
+
+                    $destination = "surat";
+                    $foto = $request->file('surat');
+                    $extension = $foto->getClientOriginalExtension(); 
+                    // RENAME THE UPLOAD WITH RANDOM NUMBER 
+                    $suratName = rand(11111, 33333) . '.' . $extension; 
+                    // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY 
+                    $foto->move($destination, $suratName);
+                    
+                    $rental = New Rental;
+                    $rental->staff_id = $request->staff_id;
+                    $rental->room_id = $request->room_id;
+                    $rental->peminjam = $request->peminjam;
+                    $rental->prodi_id = $request->prodi_id;
+                    $rental->no_hp = $request->no_hp;
+                    $rental->alamat = $request->alamat;
+                    $rental->acara = $request->acara;
+                    $rental->tgl_awal = $request->tgl_awal;
+                    $rental->tgl_akhir = $request->tgl_awal;
+                    $rental->time_id = $request->time_id;
+                    $rental->surat = $suratName;
+                    $rental->color = $warna;
+                    $rental->status_id = "2";
+                    $rental->pember_izin = "belum";
+                    $rental->save();
+
+                    return redirect()->route('frontend.schedule')->with('success', 'Input success, dalam waktu 24jam surat anda akan kami cek');
+                }
+                
             }
         }
 

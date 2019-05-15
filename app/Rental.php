@@ -8,6 +8,7 @@ use App\User;
 use App\Staff;
 use App\Prodi;
 use App\Time;
+use App\Status;
 
 class Rental extends Model
 {
@@ -17,9 +18,9 @@ class Rental extends Model
         'peminjam', 'prodi_id', 
         'no_hp', 'alamat', 
         'acara', 'tgl_awal', 
-        'tgl_akhir', 'surat',
-        'color', 
-        'status', 'pember_izin',
+        'tgl_akhir', 'time_id',
+        'surat','color', 
+        'status_id', 'pember_izin',
     ];
 
     public function room()
@@ -37,6 +38,10 @@ class Rental extends Model
     public function time()
     {
         return $this->belongsTo(Time::class);
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 
 }

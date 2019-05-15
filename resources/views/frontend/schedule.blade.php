@@ -160,7 +160,7 @@
                     <label><p><strong>Acara : </strong>{{$rental->acara}}</p></label>
                   </div>
                   <div class="span5">
-                    <label><p><strong>Status : </strong>{{$rental->status}}</p></label>
+                    <label><p><strong>Status : </strong>{{$rental->status->name}}</p></label>
                     <label><p><strong>Nama : </strong>{{$rental->peminjam}}</p></label>
                     <label><p><strong>Prodi : </strong>{{$rental->prodi->name}}</p></label>
                     <label><p><strong>No HP : </strong>{{$rental->no_hp}}</p></label>

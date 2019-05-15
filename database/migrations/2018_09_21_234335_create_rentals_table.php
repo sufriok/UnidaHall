@@ -28,7 +28,7 @@ class CreateRentalsTable extends Migration
             $table->integer('time_id')->unsigned();
             $table->string('surat');
             $table->string('color');
-            $table->string('status')->default('belum terkonfirmasi');
+            $table->integer('status_id')->unsigned();
             $table->string('pember_izin')->default('belum');
             $table->timestamps();
 

@@ -50,12 +50,12 @@
                             <td>{{ $rental->peminjam }}</td>
                             <td>{{ $rental->room->room }}</td>
                             <td>
-                                @if($rental->status === "terkonfirmasi")
-                                <p class="bg-success text-center">{{ $rental->status }}</p>
+                                @if($rental->status_id == "1")
+                                <p class="bg-success text-center">{{ $rental->status->name }}</p>
                                 @endif
 
-                                @if($rental->status === "belum terkonfirmasi")
-                                <p class="bg-warning text-center">{{ $rental->status }}</p>
+                                @if($rental->status_id == "2")
+                                <p class="bg-warning text-center">{{ $rental->status->name }}</p>
                                 @endif
                             </td>
                             <td>
@@ -132,12 +132,12 @@
                             <td>{{ $rental->peminjam }}</td>
                             <td>{{ $rental->room->room }}</td>
                             <td>
-                                @if($rental->status === "terkonfirmasi")
-                                <p class="bg-success text-center">{{ $rental->status }}</p>
+                                @if($rental->status_id == "1")
+                                <p class="bg-success text-center">{{ $rental->status->name }}</p>
                                 @endif
 
-                                @if($rental->status === "belum terkonfirmasi")
-                                <p class="bg-warning text-center">{{ $rental->status }}</p>
+                                @if($rental->status_id == "2")
+                                <p class="bg-warning text-center">{{ $rental->status->name }}</p>
                                 @endif
                             </td>
                             <td>

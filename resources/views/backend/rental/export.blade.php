@@ -2,7 +2,8 @@
     <thead>
     <tr>
         <th>Tanggal</th>
-        <th>Aula</th>
+        <th>Waktu</th>
+        <th>Aula<th>
         <th>Acara</th>
         <th>Peminjam</th>
         <th>Program Studi</th>
@@ -14,6 +15,7 @@
     @foreach($rentals as $rental)
         <tr>
             <td>{{ $rental->tgl_awal }}</td>
+            <td>{{ $rental->time->waktu }}</td>
             <td>{{ $rental->room->room }}</td>
             <td>{{ $rental->acara }}</td>
             <td>{{ $rental->peminjam }}</td>

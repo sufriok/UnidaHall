@@ -29,7 +29,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Nama Peminjam</label>
-                            <input type="text" name="peminjam" class="form-control" placeholder="Nama Peminjam" required>
+                            <input type="text" name="peminjam" class="form-control" value="{{ old('peminjam') }}" required>
                         </div>
                         <div class="form-group">
                             <label>Program Studi</label>
@@ -42,15 +42,15 @@
                         </div>
                         <div class="form-group">
                             <label>No. HP</label>
-                            <input type="number" name="no_hp" class="form-control" required>
+                            <input type="number" name="no_hp" class="form-control" value="{{ old('no_hp') }}" required>
                         </div>
                         <div class="form-group">
                             <label>Alamat di UNIDA</label>
-                            <textarea name="alamat" class="form-control" rows="2" required></textarea>
+                            <textarea name="alamat" class="form-control" rows="2" required>{{ old('alamat') }}</textarea>
                         </div>
                         <div class="form-group">
                             <label>Acara</label>
-                            <input type="text" name="acara" class="form-control" required>
+                            <input type="text" name="acara" class="form-control" value="{{ old('acara') }}" required>
                         </div>
                     </div>
                     <!-- /.col-lg-6 (nested) -->
@@ -66,7 +66,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tanggal Pemakaian</label>
-                            <input type="date" class="form-control" name="tgl_awal" required>
+                            <input type="date" class="form-control" name="tgl_awal" value="{{ old('tgl_awal') }}" required>
                         </div>
                         <div class="form-group">
                             <label>Waktu</label>
@@ -79,14 +79,15 @@
                         </div>
                         <div class="form-group">
                             <label>Surat</label>
-                            <input type="file" name="surat" class="form-control" accept="image/jpeg,image/jpg,image/png," required>
+                            <input type="file" name="surat" class="form-control" accept="image/jpeg,image/jpg,image/png," value="{{ old('surat') }}" required>
                         </div>
                         <div class="form-group">
                             <label>Status</label>
-                            <select name="status" class="form-control" required>
+                            <select name="status_id" class="form-control" required>
                                 <option value="">Pilihan</option>
-                                <option value="terkonfirmasi">terkonfirmasi</option>
-                                <option value="belum terkonfirmasi">belum terkonfirmasi</option>
+                                @foreach( $statuses as $status )
+                                <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                             

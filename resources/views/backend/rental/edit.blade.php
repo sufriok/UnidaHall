@@ -7,6 +7,12 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
+@if(Session::has('error'))
+    <div class="alert alert-danger alert-block">
+    <button type="button" class="close" data-dismiss="alert">x</button>
+    <strong>{{ Session::get('error') }}</strong>
+    </div>
+@endif
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-12">
@@ -85,10 +91,14 @@
                         </div>
                         <div class="form-group">
                             <label>Status</label>
-                            <select name="status" class="form-control" required>
-                                <option value="">Pilihan</option>
-                                <option value="terkonfirmasi">terkonfirmasi</option>
-                                <option value="belum terkonfirmasi">belum terkonfirmasi</option>
+                            <select name="status_id" class="form-control" required>
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status->id }}"
+                                        @if ($status->id === $rental->status_id)
+                                        selected
+                                        @endif>
+                                    {{ $status->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
